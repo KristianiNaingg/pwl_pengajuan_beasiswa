@@ -43,6 +43,8 @@ Route::post('/admin/user-store', [\App\Http\Controllers\AdminController::class, 
 Route::get('/admin/user-role', [\App\Http\Controllers\AdminController::class, 'showrole'])->name('user-role');
 Route::get('/admin/beasiswa', [\App\Http\Controllers\AdminController::class, 'showbeasiswa'])->name('manage-beasiswa');
 
+Route::get('/prodi', [\App\Http\Controllers\ProdiController::class, 'index'])->name('prodi-list');
+
 
 Route::get('/mahasiswa/dashboard', function () {
     return view('mahasiswa.dashboard');
