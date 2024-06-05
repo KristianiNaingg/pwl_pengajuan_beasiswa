@@ -74,3 +74,14 @@ Route::post('/mk-store', [\App\Http\Controllers\MataKuliahController::class,'sto
 
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
 require __DIR__.'/auth.php';
+
+
+Route::get('/pb', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'index'])->name('pb-list');
+
+
+Route::middleware(['auth'])->group(function() {
+    // Route for dashboard that requires authentication
+    Route::get('/dashboard', function() {
+        return view('dashboard');
+    })->name('dashboard');
+});
