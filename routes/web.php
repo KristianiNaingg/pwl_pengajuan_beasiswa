@@ -53,23 +53,9 @@ Route::get('/prodi/dashboard', function () {
 })->middleware(['prodi'])->name('prodi.dashboard');
 
 
-Route::get('/prodi', [\App\Http\Controllers\ProdiController::class, 'index'])->name('prodi-mklist');
-Route::get('/prodi/matkul-create', [\App\Http\Controllers\ProdiController::class, 'create'])->name('prodi-mkcreate');
-Route::post('/prodi/matkul-store', [\App\Http\Controllers\ProdiController::class, 'store'])->name('prodi-mkstore');
 
-Route::get('/prodi-edit/{prodi}', [\App\Http\Controllers\ProdiController::class, 'edit'])->name('prodi-edit');
-Route::post('/prodi-edit/{prodi}', [\App\Http\Controllers\ProdiController::class, 'update'])->name('prodi-update');
-Route::get('/prodi-delete/{prodi}', [\App\Http\Controllers\ProdiController::class, 'destroy'])->name('prodi-delete');
 
-Route::get('/prodi/hasilpolling', [\App\Http\Controllers\HasilPollingController::class, 'index'])->name('prodi-hasilpol');
 
-// Route::get('/prodi/matkul', [\App\Http\Controllers\MatkulController::class, 'index'])->name('matkul-list');
-// Route::get('/prodi/matkul-create', [\App\Http\Controllers\MatkulController::class, 'create'])->name('matkul-create');
-// Route::post('/prodi/matkul-store', [\App\Http\Controllers\MatkulController::class, 'store'])->name('matkul-store');
-
-Route::get('/mk', [\App\Http\Controllers\MataKuliahController::class,'index'])->name('mk-list');
-Route::get('/mk-polling', [\App\Http\Controllers\MataKuliahController::class,'polling'])->name('mk-polling');
-Route::post('/mk-store', [\App\Http\Controllers\MataKuliahController::class,'store'])->name('mk-store');
 });
 
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
