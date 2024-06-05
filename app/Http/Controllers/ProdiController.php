@@ -1,61 +1,74 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\Matakuliah;
-use App\Models\Kurikulum;
-use App\Models\Detail;
 
 use App\Models\Prodi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
-
 class ProdiController extends Controller
 {
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
-        $matkuls = Matakuliah::with('kurikulum')->get();
-        return view('prodi.index', compact('matkuls'));
+        return view('programstudi.index', [
+            'prodis' => Prodi::all(),
+        ]);
     }
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
-
     {
-        $lastId = Matakuliah::max('id_matkul');
-        // Menambah 1 untuk mendapatkan id berikutnya
-        $nextId = $lastId + 1;
-        $kurikulums = Kurikulum::all();
-        $matkuls = Matakuliah::all();
-        return view('prodi.creatematkul', compact('kurikulums','matkuls','nextId'));
+        //
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'id_matkul' => 'required|string|max:16|unique:mata_kuliah',
-            'kode_matkul' => 'required|max:100',
-            'nama_matkul' => 'required|max:100',
-            'sks' => 'required|max:100',
-            'kurikulum_id' => 'required|string|max:16',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        Matakuliah::create([
-            'id_matkul' => $request->id_matkul,
-            'nama_matkul' => $request->nama_matkul,
-            'kode_matkul' => $request->kode_matkul,
-            'kurikulum_id' => $request->kurikulum_id,
-            'sks' => $request->sks,
-        ]);
-
-        session()->flash('success', 'Data Matakuliah Berhasil Ditambahkan');
-
-        return redirect()->route('prodi-mklist');
+        //
+    }
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Prodi $prodi
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Prodi $prodi)
+    {
+        //
     }
 
- 
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Prodi $prodi
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Prodi $prodi)
+    {
+        //
+    }
 
-   
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Prodi $prodi
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Prodi $prodi)
+    {
+        //
+    }
 }
