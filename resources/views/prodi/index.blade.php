@@ -7,13 +7,13 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Daftar Beasiswa</h1>
+                        <h1 class="m-0">Program Studi </h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Daftar Beasiswa</li>
-                           
+                            <li class="breadcrumb-item active">Program Studi</li>
+
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -25,11 +25,8 @@
 
         <div class="card-footer">
             <div class="container-fluid">
-                <div class="card-body">
-                    <a href="{{route('prodi-mkcreate')}}" class="btn btn-success">Tambah Beasiswa </a>
-                </div>
             </div>
-          
+
 
         </div>
         <div class="content">
@@ -39,14 +36,13 @@
                         <table id="table-matkul" class="table table-striped">
                             <thead>
                             <tr>
-                                <th>No</th>
-                                <th>Kode Beasiswa</th>
-                                <th>Nama Beasiswa</th>
-                                <th>Tahun Akademik</th>
-                               
+                                <th>ID</th>
+                                <th>Nama Program Studi</th>
+                                <th>ID Fakultas</th>
+
                             </tr>
                             </thead>
-                            
+
                         </table>
                     </div>
                 </div>
