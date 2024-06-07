@@ -34,14 +34,115 @@
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
                 <!-- Add icons to the links using the .nav-icon class
                      with font-awesome or any other icon font library -->
-                <li class="nav-item menu-open">
-                    <a href="{{ route('prodi-mklist') }}" class="nav-link active">
-                        <i class="nav-icon fas fa-pen"></i>
-                        <p>
-                            Beasiswa
-                        </p>
+                     <li class="nav-item menu-open">
+                <a href="#" class="nav-link active">
+                    <i class="nav-icon fas fa-tachometer-alt"></i> <!-- Ikon dashboard -->
+                    <p>
+                        Dashboard
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+            <ul class="nav nav-treeview">
+                
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                    <i class="nav-icon fas fa-graduation-cap"></i> <!-- Ikon Manajemen User -->
+                    <p>
+                    Beasiswa
+                        <i class="right fas fa-angle-left"></i>
+                    </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <li class="nav-item has-treeview">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-pen"></i> <!-- Ikon Manajemen User -->
+                            <p>
+                                Admin
+                                <i class="right fas fa-angle-left"></i>
+                            </p>
+                        </a>
+                        
+                <ul class="nav nav-treeview">
+                <li class="nav-item" style="padding-left: 20px;"> <!-- Menambahkan padding kiri -->
+                                <a href="{{ route('user-create') }}" class="nav-link">
+                                    <i class="nav-icon fas "></i>
+                                    <p>Jenis Beasiswa</p>
+                                </a>
+                            </li>
+                        </ul>
+                
+            </li>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('user-create') }}" class="nav-link">
+                        <i class="nav-icon fas fa-building"></i> <!-- Ikon Add User -->
+                        <p>Fakultas</p>
                     </a>
                 </li>
+                <li class="nav-item">
+            <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas  fa-user"></i> <!-- Ikon Manajemen User -->
+                <p>Mahasiswa
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+            <li class="nav-item" style="padding-left: 20px;"> <!-- Menambahkan padding kiri -->
+                            <a href="{{ route('user-create') }}" class="nav-link">
+                                <i class="nav-icon fas "></i>
+                                <p>Timeline Beasiswa</p>
+                            </a>
+                            <a href="{{ route('user-create') }}" class="nav-link">
+                                <i class="nav-icon fas "></i>
+                                <p>Pendfataran</p>
+                            </a>
+                            <a href="{{ route('user-create') }}" class="nav-link">
+                                <i class="nav-icon fas "></i>
+                                <p>History</p>
+                            </a>
+                        </li>
+                    </ul>
+            
+        </li>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link">
+                        <i class="nav-icon fas fa-chalkboard-teacher"></i> <!-- Ikon Add Role -->
+                        <p>Prodi</p>
+                    </a>
+                </li>
+                
+            </ul>
+            
+        </li>
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-user-cog"></i> <!-- Ikon Manajemen User -->
+                <p>
+                    Manajemen User
+                    <i class="right fas fa-angle-left"></i>
+                </p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <a href="{{ route('user-create') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-plus"></i> <!-- Ikon Add User -->
+                        <p>Tambahkan User</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('user-rolelist') }}" class="nav-link">
+                        <i class="nav-icon fas fa-user-tag"></i> <!-- Ikon Add Role -->
+                        <p>Tambahkan Role</p>
+                    </a>
+                </li>
+            </ul>
+            
+        </li>
+    </ul>
+</li>
                 <li class="nav-item">
                     <form id="logout-form" action="{{route('logout')}}" method="post">
                         @csrf
