@@ -7,23 +7,16 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Data User</h1>
+                        <h1 class="m-0">Dashboard</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item dropdown">
-                                <a class="nav-link" data-toggle="dropdown" href="#">
-                                    {{ Auth::user()->name }} <i class="fas fa-caret-down"></i>
+                            
+                                <a class="nav-link"  href="#">
+                                    {{ Auth::user()->name }}/Dashboard
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                                    <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        Logout
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+                                
+                            
                         </ol>
                     </div><!-- /.col -->
                 </div><!-- /.row -->
@@ -40,7 +33,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>{{ $users->count() }}</h3>
+                                <h3>{{ $users->count()}}</h3>
                                 <p>Total User</p>
                             </div>
                             <div class="icon">
@@ -55,12 +48,12 @@
                         <div class="small-box bg-success">
                             <div class="inner">
                                 <h3>{{$rolesCount}}</h3>
-                                <p>Roles</p>
+                                <p>Fakultas</p>
                             </div>
                             <div class="icon">
                                 <i class="fas fa-users-cog"></i>
                             </div>
-                            <a href="{{ route('user-role') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('user-mahasiswalist') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
@@ -74,62 +67,35 @@
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('user-mahasiswalist') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                     <!-- ./col -->
-                     <!-- ./col -->
-                     <div class="col-lg-3 col-6">
+                    <div class="col-lg-3 col-6">
                         <!-- small box -->
-                        <div class="small-box bg-danger">
+                        <div class="small-box bg-blue">
                             <div class="inner">
-                                <h3>1</h3>
+                                <h3>{{$roleProdiCount}}</h3>
                                 <p>Prodi</p>
                             </div>
                             <div class="icon">
                                 <i class="ion ion-pie-graph"></i>
                             </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>2</h3>
-                                <p>Fakultas</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
-                            </div>
-                            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-                        </div>
-                    </div>
-                    <!-- ./col -->
-                    <div class="col-lg-3 col-6">
-                        <!-- small box -->
-                        <div class="small-box bg-danger">
-                            <div class="inner">
-                                <h3>2</h3>
-                                <p>Availaible Beasiswa</p>
-                            </div>
-                            <div class="icon">
-                                <i class="ion ion-pie-graph"></i>
-                            </div>
-                            <a href="#{{ route('manage-beasiswa') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+                            <a href="{{ route('user-prodilist') }}" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
                         </div>
                     </div>
                 </div>
-                <div class="card-footer">
-                    <div class="container-fluid">
-                        <div class="card-body">
-                            <a href="{{ route('user-create') }}" class="btn btn-success">Tambah User </a>
-                        </div>
-                    </div>
-                </div>
+              
+                  
+               
 
                 <div class="container-fluid">
                     <div class="card p-4">
+                    <div class="card-header">
+                            <div class=" d-flex align-items-center justify-content-between">
+                              <h4>Daftar User</h4>
+                            </div>
+                        </div>
                         <div class="card-body">
                             <table id="table-kk" class="table table-striped">
                                 <thead>
@@ -138,6 +104,7 @@
                                     <th>Nama</th>
                                     <th>Email</th>
                                     <th>Role</th>
+                                    <th class="text-center">Aksi</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -147,13 +114,33 @@
                                         <td>{{ $user->name }}</td>
                                         <td>{{ $user->email }}</td>
                                         <td>{{  $user->role ? $user->role->role_name : 'N/A' }}</td>
+                                        <td class="text-right"> <a href="" class="btn btn-info btn-sm">
+                                    <i class="fas fa-eye"></i> <!-- Ikon View -->
+                                </a> <a href="" class="btn btn-primary btn-sm">
+                                    <i class="fas fa-edit"></i> <!-- Ikon Edit -->
+                                </a>
+                                <form action="" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm delete-btn" data-confirm="Are you sure you want to delete this user?">
+                                        <i class="fas fa-trash-alt"></i> <!-- Ikon Delete -->
+                                    </button>
+                                </form>
+                               
+                                        </td>
                                     </tr>
-                                @endforeach 
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
                     </div>
+
+                    
                 </div><!-- /.container-fluid -->
+            </div>
+        </div>
+
+       
             </div>
         </div>
         <!-- /.content -->

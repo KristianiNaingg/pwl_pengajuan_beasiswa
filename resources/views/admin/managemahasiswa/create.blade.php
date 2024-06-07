@@ -7,11 +7,10 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Tambah Data User</h1>
+                        <h1 class="m-0">Form Tambah Mahasiswa</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <!-- <li class="breadcrumb-item"><a href="#">Home</a></li> -->
                             <li class="breadcrumb-item dropdown">
                                 <a class="nav-link" data-toggle="dropdown" href="#">
                                     {{ Auth::user()->name }} <i class="fas fa-caret-down"></i>
@@ -38,11 +37,11 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <div class=" d-flex align-items-center justify-content-between">
-                                <a href="" class="btn">
-                                    <i class="fas fa-arrow-left  text-purple  "></i>
+                            <div class="d-flex align-items-center justify-content-between">
+                                <a href="{{ route('user-mahasiswalist') }}" class="btn">
+                                    <i class="fas fa-arrow-left text-purple"></i>
                                 </a>
-                                <span>Form Tambah User</span>
+                               
                             </div>
                         </div>
                         <!-- /.card-header -->
@@ -86,20 +85,17 @@
                                         <div class="form-group">
                                             <label for="role">Role</label>
                                             <select id="role" class="form-control @error('role') is-invalid @enderror" name="role" required>
-                                                <option value="">Select Role</option>
-                                                @foreach ($roles as $role)
-                                                    <option value="{{ $role->role_name }}">{{ $role->role_name }}</option>
-                                                @endforeach
+                                                <option value="prodi">Mahasiswa</option>
                                             </select>
                                             @error('role')
                                             <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                             @enderror
                                         </div>
 
                                         <div class="form-group d-flex justify-content-end">
-                                            <a class="btn btn-default" href="{{ route('user-list') }}">Batal</a>
+                                            <a class="btn btn-default" href="{{ route('user-prodilist') }}">Batal</a>
                                             <button type="submit" class="btn btn-primary ml-2">Simpan</button>
                                         </div>
                                     </form>
