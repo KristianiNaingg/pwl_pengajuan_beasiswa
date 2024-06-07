@@ -25,24 +25,33 @@ Route::get('/', function () {
 //});
 
 Route::middleware(['auth'])->group(function () {
-Route::get('/dashboard', function () {
-        if (auth()->user()->role->role_name == 'admin') {
-            return redirect()->route('user-list');
-        } elseif (auth()->user()->role->role_name == 'mahasiswa') {
-            return redirect()->route('mk-list');
-        } elseif (auth()->user()->role->role_name == 'prodi') {
-            return redirect()->route('prodi-mklist');
-        } else {
-            return view('dashboard');
-        }
-    })->name('dashboard');
-
-Route::get('/admin', [\App\Http\Controllers\AdminController::class, 'index'])->name('user-list');
-Route::get('/admin/user-create', [\App\Http\Controllers\AdminController::class, 'create'])->name('user-create');
-Route::post('/admin/user-store', [\App\Http\Controllers\AdminController::class, 'store'])->name('user-store');
-Route::get('/admin/user-role', [\App\Http\Controllers\AdminController::class, 'showrole'])->name('user-role');
-Route::get('/admin/beasiswa', [\App\Http\Controllers\AdminController::class, 'showbeasiswa'])->name('manage-beasiswa');
-
+    Route::get('/dashboard', function () {
+            if (auth()->user()->role->role_name == 'admin') {
+                return redirect()->route('user-list');
+            } elseif (auth()->user()->role->role_name == 'mahasiswa') {
+                return redirect()->route('prodi-mklist');
+            } elseif (auth()->user()->role->role_name == 'prodi') {
+                return redirect()->route('prodi-mklist');
+            } else {
+                return view('dashboard');
+            }
+        })->name('dashboard');
+    
+    Route::get('/admin', [\App\Http\Controllers\UsersController\UsersController::class, 'index'])->name('user-list');
+    Route::get('/admin/user-create', [\App\Http\Controllers\UsersController\UsersController::class, 'create'])->name('user-create');
+    Route::post('/admin/user-store', [\App\Http\Controllers\UsersController\UsersController::class, 'store'])->name('user-store');
+    
+    Route::get('/admin/user-mahasiswa', [\App\Http\Controllers\UsersController\MahasiswaController::class, 'index'])->name('user-mahasiswalist');
+    Route::get('/admin/create-user-mahasiswa', [\App\Http\Controllers\UsersController\MahasiswaController::class, 'create'])->name('user-mahasiswa-create');
+    
+    Route::get('/admin/user-prodi', [\App\Http\Controllers\UsersController\ProdiController::class, 'index'])->name('user-prodilist');
+    Route::get('/admin/create-user-prodi', [\App\Http\Controllers\UsersController\ProdiController::class, 'create'])->name('user-prodi-create');
+    
+    Route::get('/admin/user-role', [\App\Http\Controllers\UsersController\RoleController::class, 'index'])->name('user-rolelist');
+    Route::get('/admin/create-user-role', [\App\Http\Controllers\UsersController\RoleController::class, 'create'])->name('user-role-create');
+    Route::post('/admin/user-role-store', [\App\Http\Controllers\UsersController\UsersController::class, 'store'])->name('user-role-store');
+    
+    
 Route::get('/prodi', [\App\Http\Controllers\ProdiController::class, 'index'])->name('prodi-bea');
 Route::get('/prodi/beasiswa', [\App\Http\Controllers\ProdiController::class, 'showbeasiswa'])->name('prodi-pengajuan');
 
