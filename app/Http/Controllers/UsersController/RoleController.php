@@ -1,9 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
 
+
+
+namespace App\Http\Controllers\UsersController;
+
+use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
+
 
 class RoleController extends Controller
 {
@@ -14,7 +20,9 @@ class RoleController extends Controller
      */
     public function index()
     {
-        $roles = Role::latest()->paginate(10);
+        $roles = Role::all();
+    
+        return view('admin.managerole.index', compact('roles'));
     }
 
     /**
@@ -25,7 +33,12 @@ class RoleController extends Controller
     public function create()
     {
         //
+        $roles = Role::all();
+    
+        return view('admin.managerole.create', compact('roles'));
+    
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -35,9 +48,16 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //// Validasi input
+        $validatedData = $request->validate([
+            'role_id' => 'required|integer',
+            'role_name' => 'required|string|max:100',
+        ]);
+    
+        $role = Role::create($validatedData);
+    
+        return redirect()->route('roles.index')->with('success', 'Role created successfully.');
     }
-
     /**
      * Display the specified resource.
      *
