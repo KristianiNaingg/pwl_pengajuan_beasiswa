@@ -24,7 +24,7 @@
         <div class="card-footer">
             <div class="container-fluid">
                 <div class="card-body">
-                    <a href="#" class="btn btn-success">Pengajuan Beasiswa</a>
+                    <a href="{{ route('pb-beasiswa') }}" class="btn btn-success">Pengajuan Beasiswa</a>
                 </div>
             </div>
         </div>
