@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\JenisBeasiswa;
+use App\Models\KartuKeluarga;
 use App\Models\PengajuanBeasiswa;
 use Illuminate\Http\Request;
 
@@ -25,9 +27,11 @@ class PengajuanBeasiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function pengajuan()
     {
-        //
+        return view('pengajuanbeasiswa.pilihjenisbeasiswa', [
+            'jenis_beasiswas' => JenisBeasiswa::all(),
+    ]);
     }
 
     /**
