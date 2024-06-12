@@ -76,6 +76,8 @@ require __DIR__.'/auth.php';
 
 
 Route::get('/pb', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'index'])->name('pb-list');
+Route::get('/pb-beasiswa', [\App\Http\Controllers\PengajuanBeasiswaController::class,'pengajuan'])->name('pb-beasiswa');
+Route::get('/pb-store', [\App\Http\Controllers\PengajuanBeasiswaController::class,'store'])->name('pb-store');
 
 
 Route::middleware(['auth'])->group(function() {
