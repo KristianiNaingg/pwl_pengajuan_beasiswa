@@ -42,7 +42,7 @@
                             }
                         </script>
 
-                        <form method="post" action="{{route('pb-store')}}" onsubmit="doValidate(event)">
+                        <form method="post" action="{{route('pb-registrasi')}}" onsubmit="doValidate(event)">
                             @csrf <!-- @crsf wajib ada di setiap form -->
                             <div class="form-group">
                                 @foreach($jenis_beasiswas as $jenis_beasiswa)
@@ -53,14 +53,14 @@
                                 @endforeach
                                 </select>
                                 <br>
-                                <!-- Deskripsi Beasiswa Prestasi -->
-                                <p><b>Deskripsi Beasiswa Prestasi:</b>
-                                    Beasiswa yang diberikan oleh Universitas Kristen Maranatha ditujukan bagi mahasiswa aktif yang berprestasi atau berasal dari latar belakang keluarga berekonomi marginal, sesuai syarat dan ketentuan yang berlaku serta kemampuan unit pemberi beasiswa. Setiap mahasiswa atau mahasiswi hanya berhak menerima satu jenis bantuan, baik berupa beasiswa, potongan biaya, atau bantuan keuangan dari Universitas Kristen Maranatha, Yayasan Perguruan Tinggi Kristen Maranatha (YPTKM), atau lembaga eksternal. Ini termasuk potongan biaya dari Jalur Prestasi, Jalur Undangan, dan Jalur Reguler.
-                                </p>
-                                <!-- Deskripsi Beasiswa Bantuan Ekonomi -->
-                                <p><b>Deskripsi Beasiswa Bantuan Ekonomi:</b>
-                                    Beasiswa yang disediakan oleh Universitas Kristen Maranatha dengan memberikan bantuan keuangan yang diberikan kepada mahasiswa aktif Universitas Kristen Maranatha yang berprestasi atau berasal dari latar belakang keluarga dengan kondisi ekonomi yang terbatas. Mahasiswa hanya dapat menerima satu jenis bantuan, baik itu berupa beasiswa, potongan biaya, atau bantuan keuangan lainnya, sesuai dengan kebijakan dan kemampuan penyedia beasiswa.
-                                </p>
+{{--                                <!-- Deskripsi Beasiswa Prestasi -->--}}
+{{--                                <p><b>Deskripsi Beasiswa Prestasi:</b>--}}
+{{--                                    Beasiswa yang diberikan oleh Universitas Kristen Maranatha ditujukan bagi mahasiswa aktif yang berprestasi atau berasal dari latar belakang keluarga berekonomi marginal, sesuai syarat dan ketentuan yang berlaku serta kemampuan unit pemberi beasiswa. Setiap mahasiswa atau mahasiswi hanya berhak menerima satu jenis bantuan, baik berupa beasiswa, potongan biaya, atau bantuan keuangan dari Universitas Kristen Maranatha, Yayasan Perguruan Tinggi Kristen Maranatha (YPTKM), atau lembaga eksternal. Ini termasuk potongan biaya dari Jalur Prestasi, Jalur Undangan, dan Jalur Reguler.--}}
+{{--                                </p>--}}
+{{--                                <!-- Deskripsi Beasiswa Bantuan Ekonomi -->--}}
+{{--                                <p><b>Deskripsi Beasiswa Bantuan Ekonomi:</b>--}}
+{{--                                    Beasiswa yang disediakan oleh Universitas Kristen Maranatha dengan memberikan bantuan keuangan yang diberikan kepada mahasiswa aktif Universitas Kristen Maranatha yang berprestasi atau berasal dari latar belakang keluarga dengan kondisi ekonomi yang terbatas. Mahasiswa hanya dapat menerima satu jenis bantuan, baik itu berupa beasiswa, potongan biaya, atau bantuan keuangan lainnya, sesuai dengan kebijakan dan kemampuan penyedia beasiswa.--}}
+{{--                                </p>--}}
 
                                 <!-- name="nama_kepala" -> value "nama_kepala" harus sama dengan nama kolomnya -->
                                 <button type="submit" class="btn btn-primary my-3">Next</button>
