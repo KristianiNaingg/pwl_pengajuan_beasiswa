@@ -7,7 +7,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Beasiswa</h1>
+                        <h1 class="m-0">Pengajuan Beasiswa</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -24,7 +24,7 @@
         <div class="card-footer">
             <div class="container-fluid">
                 <div class="card-body">
-                    <a href="{{ route('mk-polling') }}" class="btn btn-success">Polling Mata Kuliah</a>
+                    <a href="{{ route('pb-beasiswa') }}" class="btn btn-success">Pengajuan Beasiswa</a>
                 </div>
             </div>
         </div>
@@ -37,24 +37,30 @@
                     <div class="card-body">
                         <div class="card">
                             <div class="card-body">
-                                <table id="table-mk" class="table table-striped">
+                                <table id="table-pb" class="table table-striped">
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Kode Mata Kuliah</th>
-                                        <th>Nama Mata Kuliah</th>
-                                        <th>Kurikulum ID</th>
-                                        <th>SKS</th>
+                                        <th>NRP</th>
+                                        <th>ID Jenis Beasiswa</th>
+                                        <th>ID Periode</th>
+                                        <th>IPK Terakhir</th>
+                                        <th>Semester Pengajuan</th>
+                                        <th>Status Pengajuan</th>
+                                        <th>Alasan Ditolak</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($mks as $mk)
+                                    @foreach($pbs as $pb)
                                         <tr>
-                                            <td>{{ $mk->id }}</td>
-                                            <td>{{ $mk->kode_matkul }}</td>
-                                            <td>{{ $mk->nama_matkul }}</td>
-                                            <td>{{ $mk->kurikulum_id }}</td>
-                                            <td>{{ $mk->sks }}</td>
+                                            <td>{{ $pb->id_pengajuan }}</td>
+                                            <td>{{ $pb->NRP }}</td>
+                                            <td>{{ $pb->id_jenis_beasiswa }}</td>
+                                            <td>{{ $pb->id_periode }}</td>
+                                            <td>{{ $pb->ipk_terakhir }}</td>
+                                            <td>{{ $pb->semester_pengajuan }}</td>
+                                            <td>{{ $pb->status_pengajuan }}</td>
+                                            <td>{{ $pb->alasan_ditolak }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
@@ -75,6 +81,6 @@
                 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
                 <script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
                 <script>
-                    $('#table-mk').DataTable();
+                    $('#table-pb').DataTable();
                 </script>
 @endsection
