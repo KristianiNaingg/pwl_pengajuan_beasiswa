@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\ProdiController;
 use App\Http\Controllers\MatkulController;
 
 /*
@@ -50,11 +49,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/user-role', [\App\Http\Controllers\UsersController\RoleController::class, 'index'])->name('user-rolelist');
     Route::get('/admin/create-user-role', [\App\Http\Controllers\UsersController\RoleController::class, 'create'])->name('user-role-create');
     Route::post('/admin/user-role-store', [\App\Http\Controllers\UsersController\UsersController::class, 'store'])->name('user-role-store');
-    
-    
-Route::get('/prodi', [\App\Http\Controllers\ProdiController::class, 'index'])->name('prodi-bea');
-Route::get('/prodi/beasiswa', [\App\Http\Controllers\ProdiController::class, 'showbeasiswa'])->name('prodi-pengajuan');
-
 
 
 Route::get('/mahasiswa/dashboard', function () {
@@ -65,19 +59,29 @@ Route::get('/prodi/dashboard', function () {
     return view('prodi.dashboard');
 })->middleware(['prodi'])->name('prodi.dashboard');
 
-
-
-
-
 });
 
 Route::post('/login', [LoginController::class, 'authenticate'])->name('login');
-require __DIR__.'/auth.php';
 
+require __DIR__.'/auth.php';
 
 Route::get('/pb', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'index'])->name('pb-list');
 Route::get('/pb-beasiswa', [\App\Http\Controllers\PengajuanBeasiswaController::class,'pengajuan'])->name('pb-beasiswa');
-Route::get('/pb-store', [\App\Http\Controllers\PengajuanBeasiswaController::class,'store'])->name('pb-store');
+
+
+Route::get('/pb-registrasi', function () {
+    return view('pengajuanbeasiswa.registrasi', [
+        'mahasiswas' => \App\Models\Mahasiswa::all(),
+        'beasiswas' => \App\Models\NamaBeasiswa::all(),
+        'timelines' => \App\Models\TimelineBeasiswa::all(),
+    ]);
+})->name('registrasi-beasiswa');
+Route::post('/pb-registrasi-beasiswa', [\App\Http\Controllers\PengajuanBeasiswaController::class,'store'])->name('pb-registrasi');
+
+Route::post('/pb-upload-dokumen-beasiswa', [\App\Http\Controllers\PengajuanBeasiswaController::class,'storeDokumen'])->name('pb-upload-dokumen-beasiswa');
+
+Route::get('/pb-upload-dokumen', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'showUploadDokumenForm'])->name('pb-upload-dokumen');
+Route::post('/pb-upload-dokumen', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'storeuploadBeasiswa'])->name('pb-upload-dokumen');
 
 
 Route::middleware(['auth'])->group(function() {
