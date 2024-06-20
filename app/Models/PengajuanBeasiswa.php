@@ -13,13 +13,17 @@ class PengajuanBeasiswa extends Model
 
     protected $fillable = [
         'id_pengajuan',
-        'NRP',
-        'id_jenis_beasiswa',
-        'id_periode',
-        'ipk_terakhir',
-        'semester_pengajuan',
         'status_pengajuan',
-        'alasan_ditolak'
+        'semester_pengajuan',
+        'alasan_ditolak',
+        'transkrip_nilai',
+        'surat_rekomendasi',
+        'surat_pernyataan',
+        'surat_keaktifan',
+        'surat_keterangan',
+        'id_periode',
+        'id_beasiswa',
+        'NRP',
     ];
 
     protected $primaryKey = 'id_pengajuan';
