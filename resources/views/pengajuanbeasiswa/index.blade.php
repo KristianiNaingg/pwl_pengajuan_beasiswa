@@ -41,26 +41,32 @@
                                     <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>NRP</th>
-                                        <th>ID Jenis Beasiswa</th>
-                                        <th>ID Periode</th>
-                                        <th>IPK Terakhir</th>
-                                        <th>Semester Pengajuan</th>
                                         <th>Status Pengajuan</th>
+                                        <th>Semester Pengajuan</th>
                                         <th>Alasan Ditolak</th>
+                                        <th>Transkrip Nilai</th>
+                                        <th>Surat Rekomendasi</th>
+                                        <th>Surat Pernyataan</th>
+                                        <th>Surat Keterangan</th>
+                                        <th>ID Periode</th>
+                                        <th>ID Beasiswa</th>
+                                        <th>NRP</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($pbs as $pb)
                                         <tr>
                                             <td>{{ $pb->id_pengajuan }}</td>
-                                            <td>{{ $pb->NRP }}</td>
-                                            <td>{{ $pb->id_jenis_beasiswa }}</td>
-                                            <td>{{ $pb->id_periode }}</td>
-                                            <td>{{ $pb->ipk_terakhir }}</td>
-                                            <td>{{ $pb->semester_pengajuan }}</td>
                                             <td>{{ $pb->status_pengajuan }}</td>
+                                            <td>{{ $pb->semester_pengajuan }}</td>
                                             <td>{{ $pb->alasan_ditolak }}</td>
+                                            <td>{{ $pb->transkrip_nilai }}</td>
+                                            <td>{{ $pb->surat_rekomendasi }}</td>
+                                            <td>{{ $pb->surat_pernyataan }}</td>
+                                            <td>{{ $pb->surat_keterangan }}</td>
+                                            <td>{{ $pb->id_periode }}</td>
+                                            <td>{{ $pb->id_beasiswa }}</td>
+                                            <td>{{ $pb->NRP }}</td>
                                         </tr>
                                     @endforeach
                                     </tbody>
