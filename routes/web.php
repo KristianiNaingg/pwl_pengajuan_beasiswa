@@ -68,6 +68,19 @@ require __DIR__.'/auth.php';
 Route::get('/pb', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'index'])->name('pb-list');
 Route::get('/pb-beasiswa', [\App\Http\Controllers\PengajuanBeasiswaController::class,'pengajuan'])->name('pb-beasiswa');
 
+Route::get('/prodi', [\App\Http\Controllers\ProdiController::class, 'index'])->name('prodi');
+Route::get('/prodi/pengajuan', [\App\Http\Controllers\ProdiController::class, 'pengajuan'])->name('prodi_pengajuan');
+Route::get('/prodi/mahasiswa', [\App\Http\Controllers\MahasiswaController::class, 'index'])->name('prodi_mahasiswa');
+Route::get('/prodi/beasiswa', [\App\Http\Controllers\BeasiswaController::class, 'index'])->name('prodi_beasiswa');
+Route::get('/prodi/timeline', [\App\Http\Controllers\BeasiswaController::class, 'timeline'])->name('prodi_timeline');
+Route::get('/prodi/beasiswa/jenisbeasiswa', [\App\Http\Controllers\BeasiswaController::class, 'jenisbeasiswa'])->name('prodi_jenisbeasiswa');
+
+
+Route::get('prodi/timeline/create', [\App\Http\Controllers\BeasiswaController::class, 'create'])->name('prodi_create');
+Route::post('prodi/timeline/store', [\App\Http\Controllers\BeasiswaController::class, 'store'])->name('prodi_store');
+
+
+
 
 Route::get('/pb-registrasi', function () {
     return view('pengajuanbeasiswa.registrasi', [
