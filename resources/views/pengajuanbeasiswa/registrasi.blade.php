@@ -41,7 +41,7 @@
                             }
                         </script>
 
-                        <form method="post" action="{{ route('pb-upload-dokumen-beasiswa') }}" onsubmit="doValidate(event)">
+                        <form method="post" action="{{ route('pb-upload-transkrip_nilai-beasiswa') }}" onsubmit="doValidate(event)">
                             @csrf
                             <div class="form-group">
                                 @foreach($timelines as $timeline)
@@ -50,11 +50,15 @@
                                     </div>
                                 @endforeach
                                 <div class="row">
+
                                     @foreach($mahasiswas as $mahasiswa)
                                         <div class="col-md-6">
                                             <div class="mb-3" style="display: inline-block; width: 45%;">
                                                 <label>NRP:</label>
-                                                <p>{{ $mahasiswa->NRP }}</p>
+                                                <p>@if(Auth::user()->mahasiswa)
+                                                        {{ Auth::user()->mahasiswa->NRP }}
+                                                    @endif
+                                                </p>
                                             </div>
                                             <div class="mb-3" style="display: inline-block; width: 45%;">
                                                 <label>Nama Lengkap:</label>
@@ -111,8 +115,10 @@
                                                 <p>{{ session('selected_beasiswa')->nama_jenis_beasiswa }}</p>
                                             </div>
                                         </div>
-                                        </div>
+                                </div>
+
                                     @endforeach
+{{--                                    @endif--}}
 
                                 <button type="submit" class="btn btn-primary my-3">Next</button>
                             </div>
