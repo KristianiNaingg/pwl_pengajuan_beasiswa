@@ -52,10 +52,12 @@
                                     <td>{{ $pengajuans->surat_pernyataan }}</td>
                                     <td>{{ $pengajuans->surat_keterangan }}</td>
                                     <td>{{ $pengajuans->semester_pengajuan }}</td>
-                                    <td>{{ $pengajuans->status_pengajuan }}</td>
+                                    <td class="status">{{ $pengajuans->status_pengajuan }}</td>
                                     <td>{{ $pengajuans->alasan_ditolak }}</td>
-                                    <td><button class="btn btn-success approve-btn">Approve</button></td>
-                                </tr>
+                                    <td>
+                                        <button class="btn btn-success approve-btn" data-id="{{ $pengajuans->id_pengajuan }}">Approve</button>
+                                        <button class="btn btn-danger reject-btn" data-id="{{ $pengajuans->id_pengajuan }}">Ditolak</button>
+                                    </td>
                             @endforeach
                             </tbody>
                         </table>
@@ -84,10 +86,63 @@
 
             $('.approve-btn').on('click', function() {
                 var row = $(this).closest('tr');
-                var idPengajuan = row.find('td').eq(0).text();
+                var idPengajuan = $(this).data('id');
+                approvePengajuan(idPengajuan, 'approve', row);
+            });
+
+            $('.reject-btn').on('click', function() {
+                var row = $(this).closest('tr');
+                var idPengajuan = $(this).data('id');
                 Swal.fire({
                     title: 'Apakah Anda yakin?',
-                    text: "'Apakah Anda yakin ingin menyetujui pengajuan ini?'",
+                    text: "Apakah Anda yakin ingin menolak pengajuan ini?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Ya, tolak!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: '/pengajuan/reject/' + idPengajuan,
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                            },
+                            success: function(response) {
+                                console.log('Response:', response);
+                                if (response.success) {
+                                    row.find('.status').text('ditolak');
+                                    Swal.fire(
+                                        'Ditolak!',
+                                        'Pengajuan dengan ID Pengajuan ' + idPengajuan + ' telah ditolak.',
+                                        'success'
+                                    );
+                                } else {
+                                    Swal.fire(
+                                        'Gagal!',
+                                        response.message,
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Ajax Error:', xhr, status, error);
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat menolak pengajuan.',
+                                    'error'
+                                );
+                            }
+                        });
+                    }
+                });
+            });
+
+            function approvePengajuan(idPengajuan, action, row) {
+                Swal.fire({
+                    title: 'Apakah Anda yakin?',
+                    text: "Apakah Anda yakin ingin menyetujui pengajuan ini?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -95,15 +150,44 @@
                     confirmButtonText: 'Ya, setujui!'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Tambahkan logika persetujuan Anda di sini
-                        Swal.fire(
-                            'Disetujui!',
-                            'Pengajuan dengan ID Pengajuan ' + idPengajuan + ' telah disetujui.',
-                            'success'
-                        )
+                        $.ajax({
+                            url: '/pengajuan/' + action + '/' + idPengajuan,
+                            type: 'POST',
+                            data: {
+                                _token: '{{ csrf_token() }}',
+                            },
+                            success: function(response) {
+                                console.log('Response:', response);
+                                if (response.success) {
+                                    row.find('.status').text('aktif');
+                                    Swal.fire(
+                                        'Disetujui!',
+                                        'Pengajuan dengan ID Pengajuan ' + idPengajuan + ' telah disetujui.',
+                                        'success'
+                                    );
+                                } else {
+                                    Swal.fire(
+                                        'Gagal!',
+                                        response.message,
+                                        'error'
+                                    );
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                console.error('Ajax Error:', xhr, status, error);
+                                Swal.fire(
+                                    'Gagal!',
+                                    'Terjadi kesalahan saat menyetujui pengajuan.',
+                                    'error'
+                                );
+                            }
+                        });
                     }
-                })
-            });
+                });
+            }
         });
+
+
+
     </script>
 @endsection
