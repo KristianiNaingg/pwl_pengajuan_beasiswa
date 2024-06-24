@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\JenisBeasiswa;
-use App\Models\KartuKeluarga;
+use App\Models\NamaBeasiswa;
 use App\Models\PengajuanBeasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class PengajuanBeasiswaController extends Controller
 {
@@ -29,7 +31,12 @@ class PengajuanBeasiswaController extends Controller
      */
     public function pengajuan()
     {
+        $user = Auth::user();
+
+        $mahasiswa = \App\Models\Mahasiswa::where('email', $user->email)->first();
+        
         return view('pengajuanbeasiswa.pilihjenisbeasiswa', [
+            'mahasiswa' => $mahasiswa,
             'jenis_beasiswas' => JenisBeasiswa::all(),
     ]);
     }
@@ -46,10 +53,12 @@ class PengajuanBeasiswaController extends Controller
             'jenis_beasiswa' => 'required|array|size:1',
             'jenis_beasiswa.*' => 'exists:jenis_beasiswa,id_jenis_beasiswa',
         ]);
-    
+
+        // Menyimpan jenis beasiswa yang dipilih ke dalam sesi
         $selectedBeasiswaId = $request->input('jenis_beasiswa')[0];
         $selectedBeasiswa = JenisBeasiswa::find($selectedBeasiswaId);
         session(['selected_beasiswa' => $selectedBeasiswa]);
+
 
         // Redirect ke halaman registrasi beasiswa
         return redirect()->route('registrasi-beasiswa');
@@ -75,7 +84,7 @@ class PengajuanBeasiswaController extends Controller
         session(['selected_beasiswa' => $selectedBeasiswa]);
 
         // Redirect to the document upload page
-        return redirect()->route('pb-upload-dokumen');
+        return redirect()->route('pb-upload-transkrip_nilai');
     }
 
     /**
@@ -96,28 +105,50 @@ class PengajuanBeasiswaController extends Controller
      */
     public function storeuploadBeasiswa(Request $request)
     {
-        $validatedData = validator($request->all(),[ 
-            'transkrip_nilai' => 'required|mimes:jpeg,png,pdf|max:2048',
-            'surat_rekomendasi' => 'required|mimes:jpeg,png,pdf|max:2048',
-            'surat_pernyataan' => 'required|mimes:jpeg,png,pdf|max:2048',
-            'surat_keaktifan' => 'required|mimes:jpeg,png,pdf|max:2048',
-            'surat_keterangan' => 'required|mimes:jpeg,png,pdf|max:2048',
-        ], [ 
-            'transkrip_nilai_required' => 'Dokumen Transkrip Nilai Wajib Diisi',
-            'surat_rekomendasi_required' => 'Dokumen Surat Rekomendasi Wajib Diisi',
-            'surat_pernyataan.required' => 'Dokumen Surat Pernyataan Wajib Diisi',
-            'surat_keaktifan.required' => 'Dokumen Surat Keaktifan Wajib Diisi',
-            'surat_keterangan.required' => 'Dokumen Surat Keterangan Wajib Diisi',
-        ])->validate();
+        {
 
-        // Store files
-        $transkripNilai = $request->file('transkrip_nilai')->store('transkrip_nilai');
-        $rekomendasi = $request->file('rekomendasi')->store('rekomendasi');
-        $pernyataan = $request->file('pernyataan')->store('pernyataan');
-        $keaktifan = $request->file('keaktifan')->store('keaktifan');
-        $keterangan = $request->file('keterangan')->store('keterangan');
+            if (!auth()->check()) {
+                return redirect()->route('login')->with('error', 'You must be logged in to submit documents.');
+            }
 
-        return redirect()->route('pb-list')->with('success', 'Dokumen berhasil diunggah.');
+            $user = auth()->user();
+            \Log::info('Authenticated user: ' . json_encode($user));
+
+            if (!$user->nrp) {
+                return redirect()->back()->with('error', 'Authenticated user does not have an NRP.');
+            }
+
+            // Validation
+            $request->validate([
+                'transkrip_nilai' => 'required|mimes:jpg,jpeg,png,pdf|max:2048',
+                'rekomendasi' => 'required|mimes:jpg,jpeg,png,pdf|max:2048',
+                'pernyataan' => 'required|mimes:jpg,jpeg,png,pdf|max:2048',
+                'keaktifan' => 'required|mimes:jpg,jpeg,png,pdf|max:2048',
+                'keterangan' => 'required|mimes:jpg,jpeg,png,pdf|max:2048',
+            ]);
+
+            // Store files and get their paths
+            $transkrip_nilai = $request->file('transkrip_nilai')->store('dokumen', 'public');
+            $rekomendasi = $request->file('rekomendasi')->store('dokumen', 'public');
+            $pernyataan = $request->file('pernyataan')->store('dokumen', 'public');
+            $keaktifan = $request->file('keaktifan')->store('dokumen', 'public');
+            $keterangan = $request->file('keterangan')->store('dokumen', 'public');
+
+            // Save paths to the database
+            $pengajuanBeasiswa = new PengajuanBeasiswa();
+            $pengajuanBeasiswa->NRP = auth()->user()->nrp;
+            $pengajuanBeasiswa->status_pengajuan = 'Pending';
+            $pengajuanBeasiswa->semester_pengajuan = '2024';
+            $pengajuanBeasiswa->transkrip_nilai = $transkrip_nilai;
+            $pengajuanBeasiswa->surat_rekomendasi = $rekomendasi;
+            $pengajuanBeasiswa->surat_pernyataan = $pernyataan;
+            $pengajuanBeasiswa->surat_keaktifan = $keaktifan;
+            $pengajuanBeasiswa->surat_keterangan = $keterangan;
+            $pengajuanBeasiswa->save();
+
+            // Redirect to the index page
+            return redirect()->route('pb-list')->with('success', 'Documents uploaded successfully.');
+        }
     }
 
     /**
@@ -126,9 +157,10 @@ class PengajuanBeasiswaController extends Controller
      * @param  \App\Models\PengajuanBeasiswa  $pengajuanBeasiswa
      * @return \Illuminate\Http\Response
      */
-    public function edit(PengajuanBeasiswa $pengajuanBeasiswa)
+    public function edit($id_pengajuan)
     {
-        //
+        $pb = PengajuanBeasiswa::findOrFail($id_pengajuan);
+        return view('pengajuanbeasiswa.edit', compact('pb'));
     }
 
     /**
@@ -138,9 +170,39 @@ class PengajuanBeasiswaController extends Controller
      * @param  \App\Models\PengajuanBeasiswa  $pengajuanBeasiswa
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, PengajuanBeasiswa $pengajuanBeasiswa)
+    public function update(Request $request, $id_pengajuan)
     {
-        //
+        $request->validate([
+            'transkrip_nilai' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048',
+            'rekomendasi' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048',
+            'pernyataan' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048',
+            'keaktifan' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048',
+            'keterangan' => 'nullable|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
+
+        $pb = PengajuanBeasiswa::findOrFail($id_pengajuan);
+
+        if ($request->hasFile('transkrip_nilai')) {
+            $pb->transkrip_nilai = $request->file('transkrip_nilai')->store('dokumen', 'public');
+        }
+        if ($request->hasFile('rekomendasi')) {
+            $pb->surat_rekomendasi = $request->file('rekomendasi')->store('dokumen', 'public');
+        }
+        if ($request->hasFile('pernyataan')) {
+            $pb->surat_pernyataan = $request->file('pernyataan')->store('dokumen', 'public');
+        }
+        if ($request->hasFile('keaktifan')) {
+            $pb->surat_keaktifan = $request->file('keaktifan')->store('dokumen', 'public');
+        }
+        if ($request->hasFile('keterangan')) {
+            $pb->surat_keterangan = $request->file('keterangan')->store('dokumen', 'public');
+        }
+
+        $pb->status_pengajuan = $request->input('status_pengajuan');
+        $pb->semester_pengajuan = $request->input('semester_pengajuan');
+        $pb->save();
+
+        return redirect()->route('pb-list')->with('success', 'Pengajuan Beasiswa updated successfully.');
     }
 
     /**
@@ -149,8 +211,10 @@ class PengajuanBeasiswaController extends Controller
      * @param  \App\Models\PengajuanBeasiswa  $pengajuanBeasiswa
      * @return \Illuminate\Http\Response
      */
-    public function destroy(PengajuanBeasiswa $pengajuanBeasiswa)
+    public function destroy($id_pengajuan)
     {
-        //
+        $pb = PengajuanBeasiswa::findOrFail($id_pengajuan);
+        $pb->delete();
+
+        return redirect()->route('pb-list')->with('success', 'Pengajuan Beasiswa deleted successfully.');
     }
-}
