@@ -67,7 +67,7 @@
                                             <td><img src="{{ asset('storage/' . $pb->surat_keterangan) }}" alt="foto" class="img-thumbnail"
                                                  style="max-width: 80px"></td>
                                             <td>
-                                                <a href="{{ route('pb-edit', $pb->id_pengajuan) }}" class="btn btn-primary btn-sm">Edit</a>
+                                                <a href="{{ route('pb-edit', $pb->id_pengajuan) }}" class="btn btn-primary">Edit</a>
                                                 <form action="{{ route('pb-destroy', $pb->id_pengajuan) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
