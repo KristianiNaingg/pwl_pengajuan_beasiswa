@@ -51,4 +51,42 @@ class ProdiController extends Controller
 
         return redirect()->route('prodi.index')->with('success', 'Prodi berhasil ditambahkan');
     }
+
+
+// app/Http/Controllers/PengajuanController.php
+
+
+    public function approve($id)
+    {
+        try {
+            $pengajuan =PengajuanBeasiswa ::find($id);
+            if (!$pengajuan) {
+                return response()->json(['success' => false, 'message' => 'Pengajuan tidak ditemukan.']);
+            }
+            $pengajuan->status_pengajuan = 'aktif';
+            $pengajuan->save();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+    public function reject($id)
+    {
+        try {
+            $pengajuan = PengajuanBeasiswa::find($id);
+            if (!$pengajuan) {
+                return response()->json(['success' => false, 'message' => 'Pengajuan tidak ditemukan.']);
+            }
+            $pengajuan->status_pengajuan = 'ditolak';
+            $pengajuan->save();
+            return response()->json(['success' => true]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()]);
+        }
+    }
+
+
+
+
 }
