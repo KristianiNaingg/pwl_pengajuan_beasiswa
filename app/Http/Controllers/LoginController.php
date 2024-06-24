@@ -1,54 +1,42 @@
 <?php
-//
-//namespace App\Http\Controllers;
-//
-//use Illuminate\Http\Request;
-//use Auth;
-//
-//
-//class LoginController extends Controller
-//{
-//    public function __construct()
-//    {
-//        $this->middleware('guest')->except('logout');
-//    }
-//
-//}
-
 
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Auth;
-
+use Illuminate\Support\Facades\Auth; // Pastikan Anda mengimpor Facade Auth
 
 class LoginController extends Controller
 {
-//    public function login(Request $request){
-////        dd($request->all());
-//        if(Auth::attempt($request->only('email','password'))){
-//            return redirect('/starter');
-//        }
-//        return redirect('login');
-//    }
-
     public function login(Request $request)
     {
-        if (Auth::attempt($request->only('email', 'password'))) {
-            // Jika autentikasi berhasil, dapatkan peran pengguna
-            $user = Auth::user();
-            $roleName = $user->roles->role; // Asumsikan relasi 'role' di model 'User'
+        $credentials = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-            // Arahkan pengguna berdasarkan peran
-            if ($roleName === 'admin') {
-                return redirect('/admin');
-            } elseif ($roleName === 'mahasiswa') {
-                return redirect('/mahasiswa');
-            }
+        if (Auth::attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/pb'); // Sesuaikan dengan halaman dashboard Anda
         }
 
-        // Jika autentikasi gagal, arahkan kembali ke halaman login
-        return redirect('login');
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ]);
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect('/login');
+    }
+
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
+    }
 }
