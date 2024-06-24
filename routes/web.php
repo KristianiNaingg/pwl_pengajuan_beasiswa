@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\MatkulController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +14,11 @@ use App\Http\Controllers\MatkulController;
 |
 */
 
-Route::get('/', function () {
-    return redirect(route('login'));
-});
+require __DIR__.'/auth.php';
 
-//Route::get('/starter', function(){
-//    return view('starter' );
-//});
+Route::get('/', function () {
+        return redirect('/login');
+    });
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
@@ -91,11 +88,14 @@ Route::get('/pb-registrasi', function () {
 })->name('registrasi-beasiswa');
 Route::post('/pb-registrasi-beasiswa', [\App\Http\Controllers\PengajuanBeasiswaController::class,'store'])->name('pb-registrasi');
 
-Route::post('/pb-upload-dokumen-beasiswa', [\App\Http\Controllers\PengajuanBeasiswaController::class,'storeDokumen'])->name('pb-upload-dokumen-beasiswa');
+Route::post('/pb-upload-transkrip_nilai-beasiswa', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'storeDokumen'])->name('pb-upload-transkrip_nilai-beasiswa');
 
-Route::get('/pb-upload-dokumen', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'showUploadDokumenForm'])->name('pb-upload-dokumen');
-Route::post('/pb-upload-dokumen', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'storeuploadBeasiswa'])->name('pb-upload-dokumen');
+Route::get('/pb-upload-transkrip_nilai', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'showUploadDokumenForm'])->name('pb-upload-transkrip_nilai');
+Route::post('/pb-upload-transkrip_nilai', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'storeuploadBeasiswa'])->name('pb-upload-transkrip_nilai');
 
+Route::get('/pb/{id}/edit', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'edit'])->name('pb-edit');
+Route::put('/pb/{id}', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'update'])->name('pb-update');
+Route::delete('/pb/{id}', [\App\Http\Controllers\PengajuanBeasiswaController::class, 'destroy'])->name('pb-destroy');
 
 Route::middleware(['auth'])->group(function() {
     // Route for dashboard that requires authentication
@@ -103,3 +103,6 @@ Route::middleware(['auth'])->group(function() {
         return view('dashboard');
     })->name('dashboard');
 });
+
+Route::post('/login', [LoginController::class, 'login']);
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
