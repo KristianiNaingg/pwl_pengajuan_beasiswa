@@ -40,34 +40,43 @@
                                 <table id="table-pb" class="table table-striped">
                                     <thead>
                                     <tr>
-                                        <th>ID</th>
+                                        <th>NRP</th>
                                         <th>Status Pengajuan</th>
                                         <th>Semester Pengajuan</th>
-                                        <th>Alasan Ditolak</th>
                                         <th>Transkrip Nilai</th>
                                         <th>Surat Rekomendasi</th>
                                         <th>Surat Pernyataan</th>
+                                        <th>Surat Keaktifan</th>
                                         <th>Surat Keterangan</th>
-                                        <th>ID Periode</th>
-                                        <th>ID Beasiswa</th>
-                                        <th>NRP</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                     @foreach($pbs as $pb)
-                                        <tr>
-                                            <td>{{ $pb->id_pengajuan }}</td>
+                                        <td>{{ $pb->NRP }}</td>
                                             <td>{{ $pb->status_pengajuan }}</td>
                                             <td>{{ $pb->semester_pengajuan }}</td>
-                                            <td>{{ $pb->alasan_ditolak }}</td>
-                                            <td>{{ $pb->transkrip_nilai }}</td>
-                                            <td>{{ $pb->surat_rekomendasi }}</td>
-                                            <td>{{ $pb->surat_pernyataan }}</td>
-                                            <td>{{ $pb->surat_keterangan }}</td>
-                                            <td>{{ $pb->id_periode }}</td>
-                                            <td>{{ $pb->id_beasiswa }}</td>
-                                            <td>{{ $pb->NRP }}</td>
+                                            <td><img src="{{ asset('storage/' . $pb->transkrip_nilai) }}" alt="foto" class="img-thumbnail"
+                                                 style="max-width: 80px"></td>
+                                            <td><img src="{{ asset('storage/' . $pb->surat_rekomendasi) }}" alt="foto" class="img-thumbnail"
+                                                 style="max-width: 80px"></td>
+                                            <td><img src="{{ asset('storage/' . $pb->surat_pernyataan) }}" alt="foto" class="img-thumbnail"
+                                                 style="max-width: 80px"></td>
+                                            <td><img src="{{ asset('storage/' . $pb->surat_keaktifan) }}" alt="foto" class="img-thumbnail"
+                                                 style="max-width: 80px"></td>
+                                            <td><img src="{{ asset('storage/' . $pb->surat_keterangan) }}" alt="foto" class="img-thumbnail"
+                                                 style="max-width: 80px"></td>
+                                            <td>
+                                                <a href="{{ route('pb-edit', $pb->id_pengajuan) }}" class="btn btn-primary btn-sm">Edit</a>
+                                                <form action="{{ route('pb-destroy', $pb->id_pengajuan) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger btn-sm" data-confirm="Apakah anda yakin ingin menghapus data ini?">Delete</button>
+                                                </form>
+                                            </td>
+
                                         </tr>
+                                    
                                     @endforeach
                                     </tbody>
                                 </table>
@@ -84,6 +93,20 @@
             @endsection
 
             @section('ExtraJS')
+            <script>
+                    document.addEventListener('DOMContentLoaded', function () {
+                        const deleteButtons = document.querySelectorAll('.btn-sm');
+
+                        deleteButtons.forEach(function (button) {
+                            button.addEventListener('click', function (event) {
+                                const confirmationMessage = button.getAttribute('data-confirm');
+                                if (!confirm(confirmationMessage)) {
+                                    event.preventDefault();
+                                }
+                            });
+                        });
+                    });
+                </script>
                 <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
                 <script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
                 <script>
