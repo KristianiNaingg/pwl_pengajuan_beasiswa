@@ -77,6 +77,24 @@ Route::get('prodi/timeline/create', [\App\Http\Controllers\BeasiswaController::c
 Route::post('prodi/timeline/store', [\App\Http\Controllers\BeasiswaController::class, 'store'])->name('prodi_store');
 
 
+Route::get('/fakultas', [\App\Http\Controllers\FakultasController::class, 'index'])->name('fakultas');
+Route::get('/fakultas/dosen', [\App\Http\Controllers\FakultasController::class, 'dosen'])->name('fakultas_dosen');
+Route::get('/fakultas/mahasiswa', [\App\Http\Controllers\MahasiswaController::class, 'index'])->name('fakultas_mahasiswa');
+Route::get('/fakultas/beasiswa', [\App\Http\Controllers\BeasiswaController::class, 'index'])->name('fakultas_beasiswa');
+Route::get('/fakultas/timeline', [\App\Http\Controllers\BeasiswaController::class, 'timeline'])->name('fakultas_timeline');
+Route::get('/fakultas/beasiswa/jenisbeasiswa', [\App\Http\Controllers\BeasiswaController::class, 'jenisbeasiswa'])->name('fakultas_jenisbeasiswa');
+
+Route::get('fakultas/timeline/create', [\App\Http\Controllers\BeasiswaController::class, 'create'])->name('fakultas_create');
+Route::post('fakultas/timeline/store', [\App\Http\Controllers\BeasiswaController::class, 'store'])->name('fakultas_store');
+
+
+
+
+Route::post('/pengajuan/approve/{id}', [\App\Http\Controllers\BeasiswaController::class, 'approve'])->name('pengajuan.approve');
+Route::post('/pengajuan/reject/{id}', [\App\Http\Controllers\BeasiswaController::class, 'reject'])->name('pengajuan.reject');
+
+
+
 
 
 Route::get('/pb-registrasi', function () {
