@@ -33,19 +33,28 @@ Route::middleware(['auth'])->group(function () {
             }
         })->name('dashboard');
     
-    Route::get('/admin', [\App\Http\Controllers\UsersController\UsersController::class, 'index'])->name('user-list');
-    Route::get('/admin/user-create', [\App\Http\Controllers\UsersController\UsersController::class, 'create'])->name('user-create');
-    Route::post('/admin/user-store', [\App\Http\Controllers\UsersController\UsersController::class, 'store'])->name('user-store');
-    
-    Route::get('/admin/user-mahasiswa', [\App\Http\Controllers\UsersController\MahasiswaController::class, 'index'])->name('user-mahasiswalist');
-    Route::get('/admin/create-user-mahasiswa', [\App\Http\Controllers\UsersController\MahasiswaController::class, 'create'])->name('user-mahasiswa-create');
-    
-    Route::get('/admin/user-prodi', [\App\Http\Controllers\UsersController\ProdiController::class, 'index'])->name('user-prodilist');
-    Route::get('/admin/create-user-prodi', [\App\Http\Controllers\UsersController\ProdiController::class, 'create'])->name('user-prodi-create');
-    
-    Route::get('/admin/user-role', [\App\Http\Controllers\UsersController\RoleController::class, 'index'])->name('user-rolelist');
-    Route::get('/admin/create-user-role', [\App\Http\Controllers\UsersController\RoleController::class, 'create'])->name('user-role-create');
-    Route::post('/admin/user-role-store', [\App\Http\Controllers\UsersController\UsersController::class, 'store'])->name('user-role-store');
+    Route::get('/admin', [\App\Http\Controllers\AdminController\UsersController::class, 'index'])->name('user-list');
+Route::get('/admin/user-create', [\App\Http\Controllers\AdminController\UsersController::class, 'create'])->name('user-create');
+Route::post('/admin/user-store', [\App\Http\Controllers\AdminController\UsersController::class, 'store'])->name('user-store');
+
+Route::get('/admin-mahasiswa', [\App\Http\Controllers\AdminController\MahasiswaController::class, 'index'])->name('admin-mahasiswalist');
+Route::get('/admin/create-mahasiswa', [\App\Http\Controllers\AdminController\MahasiswaController::class, 'create'])->name('admin-mahasiswa-create');
+
+Route::get('/admin/user-prodi', [\App\Http\Controllers\AdminController\ProdiController::class, 'index'])->name('user-prodilist');
+Route::get('/admin/create-user-prodi', [\App\Http\Controllers\AdminController\ProdiController::class, 'create'])->name('user-prodi-create');
+
+Route::get('/admin-fakultas', [\App\Http\Controllers\AdminController\FakultasController::class, 'index'])->name('admin-fakultaslist');
+Route::get('/admin/create-fakultas', [\App\Http\Controllers\AdminController\FakultasController::class, 'create'])->name('fakultas-create');
+Route::post('/admin/fakultas-store', [\App\Http\Controllers\AdminController\RoleController::class, 'store'])->name('admin-fakultas-store');
+
+Route::get('/admin-prodi', [\App\Http\Controllers\AdminController\ProdiController::class, 'index'])->name('admin-prodilist');
+
+
+Route::get('/admin/user-role', [\App\Http\Controllers\AdminController\RoleController::class, 'index'])->name('user-rolelist');
+Route::get('/admin/create-user-role', [\App\Http\Controllers\AdminController\RoleController::class, 'create'])->name('user-role-create');
+Route::post('/admin/user-role-store', [\App\Http\Controllers\AdminController\RoleController::class, 'store'])->name('user-role-store');
+
+Route::get('/admin/beasiswa', [\App\Http\Controllers\BeasiswaController::class, 'index'])->name('beasiswa-list');
 
 
 Route::get('/mahasiswa/dashboard', function () {
