@@ -8,22 +8,28 @@ use Illuminate\Database\Eloquent\Model;
 class Mahasiswa extends Model
 {
     use HasFactory;
+    protected $table = 'mahasiswa';
+    protected $primaryKey = 'NRP';
 
-    protected $table = 'mahasiswa'; #value yang dimasukan adalah nama tabelnya
+
 
     protected $fillable = [
         'NRP',
         'nama_lengkap',
-        'tempat_tgl_lahir',
-        'jenis_kelamin',
         'no_hp',
         'email',
-        'ipk_terakhir',
         'status_aktif',
         'angkatan',
         'id_prodi',
-        'users_id',
+        'users_id'
     ];
+    public function prodi()
+    {
+        return $this->belongsTo(Prodi::class, 'id_prodi');
+    }
 
-    protected $primaryKey = 'NRP';
+    public function user()
+{
+    return $this->belongsTo(User::class,'users_id');
+}
 }

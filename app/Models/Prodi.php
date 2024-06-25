@@ -23,4 +23,9 @@ class Prodi extends Model
     {
         return $this->belongsTo(Fakultas::class, 'id_fakultas');
     }
+
+    public function dosen()
+    {
+        return $this->belongsTo(Dosen::class, 'id_dosen');
+    }
 }

@@ -9,6 +9,7 @@ class Dosen extends Model
 {
     use HasFactory;
     protected $table = 'dosen';
+    protected $primaryKey = 'id_dosen';
 
     protected $fillable =[
         'id_dosen',
@@ -16,11 +17,13 @@ class Dosen extends Model
         'jabatan',
     ];
 
-    // Di model Dosen
     public function prodi()
     {
-        return $this->belongsTo(Prodi::class, 'id_prodi');
+        return $this->hasMany(Prodi::class);
     }
 
-
+    public function user()
+{
+    return $this->belongsTo(User::class);
+}
 }
