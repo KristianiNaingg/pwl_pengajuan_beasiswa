@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Daftar Data Prodi</h1>
+                        <h1 class="m-0">Data Prodi</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <a class="nav-link" href="#">
-                                {{ Auth::user()->name }}/User Mahasiswa Prodi
+                                {{ Auth::user()->name }}/Manage Prodi
                             </a>
                         </ol>
                     </div><!-- /.col -->
@@ -36,45 +36,33 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <table id="table-kk" class="table table-striped">
-                                    <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>NIP</th>
-                                        <th>Nama Prodi</th>
-                                        <th>Email</th>
-                                        <th>Profile</th>
-                                        <th class="text-center">Aksi</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    @foreach($users as $user)
-                                        <tr>
-                                            <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $user->nrp ?? 'N/A' }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->profile ?? 'N/A' }}</td>
-                                            <td class="text-right">
-                                                <a href="" class="btn btn-info btn-sm">
-                                                    <i class="fas fa-eye"></i> <!-- Ikon View -->
-                                                </a>
-                                                <a href="" class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-edit"></i> <!-- Ikon Edit -->
-                                                </a>
-                                                <form action="" method="POST" style="display:inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm delete-btn" data-confirm="Are you sure you want to delete this user?">
-                                                        <i class="fas fa-trash-alt"></i> <!-- Ikon Delete -->
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
+                        
+                        <table class="table table-striped table-bordered" id="table-prodi" style="width:100%">
+                            <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama Fakultas</th>
+                                <th>Nama Kaprodi</th>
+                                <th>Username</th>
+                                <th>Nama Program Studi</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($prodi as $prodis)
+                                <tr>
+                                    <td>{{ $prodis->id_prodi }}</td>
+                                    <td>{{$prodis->fakultas? $prodis->fakultas->nama_fakultas: 'N/A' }}
+                                    </td>
+                                   
+                                    <td>{{$prodis->dosen? $prodis->dosen->nama_dosen: 'N/A' }}</td>
+                                    <td>{{ $prodis->dosen && $prodis->dosen->user? $prodis->dosen->user->name: 'N/A'  }}
+                                    </td>
+                                    <td>{{ $prodis->nama_prodi }}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                         </div>
                     </div><!-- /.container-fluid -->
                 </div>

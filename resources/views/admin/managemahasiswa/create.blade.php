@@ -85,7 +85,7 @@
                                         <div class="form-group">
                                             <label for="role">Role</label>
                                             <select id="role" class="form-control @error('role') is-invalid @enderror" name="role" required>
-                                                <option value="prodi">Mahasiswa</option>
+                                                <option value="mahasiswa">Mahasiswa</option>
                                             </select>
                                             @error('role')
                                             <span class="invalid-feedback" role="alert">
@@ -95,7 +95,7 @@
                                         </div>
 
                                         <div class="form-group d-flex justify-content-end">
-                                            <a class="btn btn-default" href="{{ route('user-prodilist') }}">Batal</a>
+                                            <a class="btn btn-default" href="{{ route('user-mahasiswalist') }}">Batal</a>
                                             <button type="submit" class="btn btn-primary ml-2">Simpan</button>
                                         </div>
                                     </form>

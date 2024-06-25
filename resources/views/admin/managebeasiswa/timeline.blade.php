@@ -7,12 +7,12 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1 class="m-0">Data Role</h1>
+                        <h1 class="m-0">Data Beasiswa</h1>
                     </div><!-- /.col -->
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <a class="nav-link" href="#">
-                                {{ Auth::user()->name }}/User Mahasiswa Prodi
+                                {{ Auth::user()->name }}/Beasiswa```
                             </a>
                         </ol>
                     </div><!-- /.col -->
@@ -29,46 +29,28 @@
                         <div class="card p-4">
                             <div class="card-header">
                                 <div class="d-flex align-items-center justify-content-between">
-                                    <h4>Daftar Role</h4>
-                                    <a href="{{ route('user-role-create') }}" class="btn btn-primary">
-                                        <i class="fas fa-plus"></i> Tambah Role
+                                    
+                                    <a href="" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i> Tambah Jenis Beasiswa
                                     </a>
                                 </div>
                             </div>
-                            <div class="card-body">
+                            <div class="card-body small">
                                 <table id="table-kk" class="table table-striped">
                                     <thead>
                                     <tr>
+                                        <th>Periode</th>
+                                        <th>Jenis Beasiswa</th>
+                                        <th>Nama Beasiswa</th>
                                         
-                                        <th>ID Role</th>
-                                        <th>Nama Role</th>
+                                        <th>Tanggal Mulai</th>
+                                        <th>Tanggal Berakhir</th>
+                                       
+                                        <th>Deskripsi</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    @foreach($roles as $role)
-                                        <tr>
-                                            
-                                            <td>{{ $role->role_id }}</td>
-                                            <td>{{ $role->role_name }}</td>
-                                            <td class="text-right">
-                                                <a href="" class="btn btn-info btn-sm">
-                                                    <i class="fas fa-eye"></i> <!-- Ikon View -->
-                                                </a>
-                                                <a href="" class="btn btn-primary btn-sm">
-                                                    <i class="fas fa-edit"></i> <!-- Ikon Edit -->
-                                                </a>
-                                                <form action="" method="POST" style="display:inline-block;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm delete-btn" data-confirm="Are you sure you want to delete this role?">
-                                                        <i class="fas fa-trash-alt"></i> <!-- Ikon Delete -->
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                    </tbody>
+                                    
                                 </table>
                             </div>
                         </div>
@@ -83,6 +65,8 @@
 @section('ExtraCSS')
     <link rel="stylesheet" href="{{ asset('plugins/datatables-bs4/css/dataTables.bootstrap4.min.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="{{ asset('css/apps.css') }}"> <!-- Sertakan file CSS kustom -->
+
 @endsection
 
 @section('ExtraJS')

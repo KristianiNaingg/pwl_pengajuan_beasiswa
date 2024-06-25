@@ -38,7 +38,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center justify-content-between">
-                                <a href="{{ route('user-rolelist') }}" class="btn">
+                                <a href="{{ route('user-rolelist')}}" class="btn">
                                     <i class="fas fa-arrow-left text-purple"></i>
                                 </a>
                                
@@ -48,35 +48,18 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-8 mx-auto">
-                                    <form method="POST" action="{{ route('user-role-store') }}">
-                                        @csrf
-                                        <div class="form-group row">
-                                            <label for="role_id" class="col-sm-3 col-form-label">ID Role</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control @error('role_id') is-invalid @enderror" name="role_id" id="role_id" value="{{ old('role_id') }}" placeholder="ID Role" autofocus>
-                                                @error('role_id')
-                                                <div class="text-danger small mt-1">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row">
-                                            <label for="role_name" class="col-sm-3 col-form-label">Nama Role</label>
-                                            <div class="col-sm-9">
-                                                <input type="text" class="form-control @error('role_name') is-invalid @enderror" name="role_name" id="role_name" value="{{ old('role_name') }}" placeholder="Nama Role">
-                                                @error('role_name')
-                                                <div class="text-danger small mt-1">{{ $message }}</div>
-                                                @enderror
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group row d-flex justify-content-end">
-                                            <div class="col-sm-9">
-                                                <a class="btn btn-default" href="{{ route('user-rolelist') }}">Batal</a>
-                                                <button type="submit" class="btn btn-primary ml-2">Simpan</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                <form method="POST" action="{{ route('user-role-store') }}">
+                                @csrf
+                                <div class="form-group">
+                                    <label for="role_id">ID Role</label>
+                                    <input type="text" class="form-control" name="role_id" id="role_id">
+                                </div>
+                                <div class="form-group">
+                                    <label for="role_name">Nama Role</label>
+                                    <input type="text" class="form-control" name="role_name" id="role_name">
+                                </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
                                 </div>
                             </div>
                         </div>

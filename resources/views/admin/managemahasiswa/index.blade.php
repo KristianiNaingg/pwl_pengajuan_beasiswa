@@ -12,7 +12,7 @@
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
                             <a class="nav-link" href="#">
-                                {{ Auth::user()->name }}/User Mahasiswa
+                                {{ Auth::user()->name }}/Manage Mahasiswa
                             </a>
                         </ol>
                     </div><!-- /.col -->
@@ -30,7 +30,7 @@
                             <div class="card-header">
                                 <div class="d-flex align-items-center justify-content-between">
                                     
-                                    <a href="{{ route('user-mahasiswa-create') }}" class="btn btn-primary">
+                                    <a href="{{ route('admin-mahasiswa-create') }}" class="btn btn-primary">
                                         <i class="fas fa-plus"></i> Tambah Mahasiswa
                                     </a>
                                 </div>
@@ -43,18 +43,24 @@
                                         <th>NRP</th>
                                         <th>Nama Mahasiswa</th>
                                         <th>Email</th>
-                                        <th>Profile</th>
+                                        <th>Status Aktif</th>
+                                        <th>Angkatan</th>
+                                        <th>Program Studi</th>
+                                        <th>User Name</th>
                                         <th class="text-center">Aksi</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @foreach($users as $user)
+                                    @foreach($mahasiswas as $mahasiswa)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $user->nrp ?? 'N/A' }}</td>
-                                            <td>{{ $user->name }}</td>
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->profile ?? 'N/A' }}</td>
+                                            <td>{{ $mahasiswa->NRP?? 'N/A' }}</td>
+                                            <td>{{ $mahasiswa->nama_lengkap }}</td>
+                                            <td>{{ $mahasiswa->email }}</td>
+                                            <td>{{ $mahasiswa->status_aktif}}</td>
+                                            <td>{{ $mahasiswa->angkatan}}</td>
+                                            <td>{{ $mahasiswa->prodi? $mahasiswa->prodi->nama_prodi: 'N/A'}}</td>
+                                            <td>{{ $mahasiswa->user?  $mahasiswa->user->name: 'N/A' }}</td>
                                             <td class="text-right">
                                                 <a href="" class="btn btn-info btn-sm">
                                                     <i class="fas fa-eye"></i> <!-- Ikon View -->

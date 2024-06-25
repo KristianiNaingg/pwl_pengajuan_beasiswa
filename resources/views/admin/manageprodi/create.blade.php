@@ -38,7 +38,7 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center justify-content-between">
-                                <a href="{{ route('user-mahasiswalist') }}" class="btn">
+                                <a href="{{ route('user-prodilist') }}" class="btn">
                                     <i class="fas fa-arrow-left text-purple"></i>
                                 </a>
                                
