@@ -36,7 +36,7 @@ class FakultasController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        Prodi::create($request->all());
+        Fakultas::create($request->all());
 
         return redirect()->route('prodi.index')->with('success', 'Prodi berhasil ditambahkan');
     }
